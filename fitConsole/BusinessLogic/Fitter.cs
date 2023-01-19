@@ -9,7 +9,6 @@ namespace Fit.BusinessLogic
 
         public Fitter(int a, int b)
         {
-            if (b < a) (a, b) = (b, a);
             this.a = a;
             this.b = b;
             this.stackSegments = new Stack<int>();
@@ -20,7 +19,7 @@ namespace Fit.BusinessLogic
         {
             bool ret = false;
 
-            if (s2 < s1) (s1, s2) = (s2, s1);
+            InputFormatter.swapIfNeeded(ref s1, ref s2);
 
             double AE = Math.Sqrt(s1 * s1 - a * a);
             double EC = Math.Sqrt((b - AE) * (b - AE) + a * a);
@@ -52,32 +51,6 @@ namespace Fit.BusinessLogic
         {
             return (segWidth >= a);
         }
-
-        //public bool fits(int s1)
-        //{
-        //    return (s1 >= a);
-
-        //}
-
-        //public bool fits(int s1, int s2)
-        //{
-        //    bool ret = false;
-        //    double AE = Math.Sqrt(s1 * s1 - a * a);
-        //    double EC = Math.Sqrt((b - AE) * (b - AE) + a * a);
-
-        //    if (bothSegmentsSmallerThanSmallerEdge(s1, s2)) ret = false;
-        //    if ((s2 >= b && s1 >= a) ||
-        //                        (AE >= b) ||
-        //                        (EC <= s2))
-        //    {
-        //        ret = true;
-        //    }
-        //    if (joints.Count == 0) return true;
-        //    return ret &&
-        //        fits(joints.Pop(), joints.Pop());
-
-
-        //}
 
         private bool bothSegmentsSmallerThanSmallerEdge(int s1, int s2)
         {

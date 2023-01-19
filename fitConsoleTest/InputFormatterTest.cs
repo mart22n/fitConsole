@@ -4,12 +4,23 @@ namespace Fit.BusinessLogic
 	public class InputFormatterTest
 	{
         [Fact]
-        public void if_b_smaller_a_theyAreSwapped()
+        public void if_second_smaller_first_theyAreSwapped()
         {
-            string s = "3,2,2";
-            InputFormatter f = new InputFormatter(s);
-            Assert.Equal(2, f.a);
-            Assert.Equal(3, f.b);
+            int first = 6;
+            int second = 5;
+            InputFormatter.swapIfNeeded(ref first,ref second);
+            Assert.Equal(5, first);
+            Assert.Equal(6, second);
+        }
+
+        [Fact]
+        public void if_second_greaterThan_first_theyAreNotSwapped()
+        {
+            int first = 5;
+            int second = 6;
+            InputFormatter.swapIfNeeded(ref first, ref second);
+            Assert.Equal(5, first);
+            Assert.Equal(6, second);
         }
     }
 }

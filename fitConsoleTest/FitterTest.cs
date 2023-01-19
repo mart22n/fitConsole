@@ -3,7 +3,14 @@ using Fit.BusinessLogic;
 namespace FitterTest
 {
 	public class FitterTest
-    { 
+    {
+        /*
+         * The testcases were found as a result of combining four variables: 
+         * a, b, s1 and s2 (see parcel_and_joint.jpg). Hopefully all combinations
+         * were found, given the conditions: a is smaller or equal to b, and
+         * s1 is smaller or equal to s2.
+         */
+
         /*
          * testcases for zero joints. 
          */
@@ -72,7 +79,7 @@ namespace FitterTest
         }
 
         /*
-         * testcases for multiple joints - no rotation
+         * testcases for multiple joints - no parcel rotation
          */
         [Fact]
         public void if_allJointsTooSmall_noFit()
@@ -115,7 +122,7 @@ namespace FitterTest
         }
 
         /*
-         * testcases for a single joint - no rotation
+         * testcases for a single joint - no parcel rotation
          */
         [Fact]
 		public void if_a_smaller_b_smaller_s1_smaller_s2_fits()
@@ -269,7 +276,7 @@ namespace FitterTest
             Assert.True(f.fits(l));
         }
 
-        /* Testcases for a single joint - rotation
+        /* Testcases for a single joint - parcel rotates
          */
         [Fact]
         public void if_a_smaller_s1_and_EC_smaller_s2_then_s2_smaller_b()
@@ -315,7 +322,10 @@ namespace FitterTest
 
 
 
-        /* Testcases for multiple joints - rotation
+        /* Testcases for multiple joints - parcel rotates. Here the numbers
+         * are big in order to simulate near-corner cases, where changing a 
+         * segment width by adding or subtracting 1 makes the difference in
+         * fitting or not. (see (int)EC - 1 and (int)EC + 1 in code).
         */
         [Fact]
         public void if_onlyOneJointABitTooSmall_noFit()

@@ -7,8 +7,10 @@ namespace Fit.BusinessLogic
 	{
         private int _a;
         private int _b;
+        private int _s1;
+        private int _s2;
 
-		public int a
+        public int a
 		{
 			get => _a;
 			private set => _a = value;
@@ -18,6 +20,20 @@ namespace Fit.BusinessLogic
         {
             get => _b;
             private set => _b = value;
+        }
+
+
+
+        public int s1
+        {
+            get => _s1;
+            private set => _s1 = value;
+        }
+
+        public int s2
+        {
+			get => _s2;
+            private set => _s2 = value;
         }
 
         public List<int> pipeSegments;
@@ -35,7 +51,7 @@ namespace Fit.BusinessLogic
 			}
 			this._a = allDimensions[0];
 			this._b = allDimensions[1];
-			if (_a > _b) (_a, _b) = (_b, _a);
+			swapIfNeeded(ref _a, ref _b);
 			pipeSegments = allDimensions.GetRange(2, allDimensions.Count - 2);
         }
 
@@ -56,6 +72,11 @@ namespace Fit.BusinessLogic
 				}
 			}
 			return ret;
+		}
+
+		public static void swapIfNeeded(ref int a1, ref int a2)
+		{
+			if (a1 > a2) (a1, a2) = (a2, a1);
 		}
 	}
 }
