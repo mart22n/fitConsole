@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 namespace Fit.BusinessLogic
 {
     public class Fitter
     {
         private int a;
         private int b;
-        private Stack<int> stackSegments;
+        private Queue<int> queueSegments;
 
         public Fitter(int a, int b)
         {
             this.a = a;
             this.b = b;
-            this.stackSegments = new Stack<int>();
+            this.queueSegments = new Queue<int>();
         }
 
 
@@ -19,22 +19,25 @@ namespace Fit.BusinessLogic
         {
             bool ret = false;
 
+            int secondToLastSegmentWidth = s2;
             InputFormatter.swapIfNeeded(ref s1, ref s2);
 
+            if (bothSegmentsSmallerThanSmallerEdge(s1, s2)) ret = false;
+
+            // see picture for AE and EC
             double AE = Math.Sqrt(s1 * s1 - a * a);
             double EC = Math.Sqrt((b - AE) * (b - AE) + a * a);
 
-            if (bothSegmentsSmallerThanSmallerEdge(s1, s2)) ret = false;
             if ((s2 >= b && s1 >= a) ||
                                 (AE >= b) ||
                                 (EC <= s2))
             {
                 ret = true;
             }
-            if (stackSegments.Count == 0) return ret;
-            if (stackSegments.Count == 1)
-                return (ret == true? fitsThroughSingleSegment(stackSegments.Pop()) : false);
-            return (ret == true? fitsThroughCurrentJoint(stackSegments.Pop(), stackSegments.Pop()) : false);
+            if (queueSegments.Count == 0) return ret;
+            if (queueSegments.Count == 1)
+                return (ret == true? fitsThroughCurrentJoint(secondToLastSegmentWidth, queueSegments.Dequeue()) : false);
+            return (ret == true? fitsThroughCurrentJoint(queueSegments.Dequeue(), queueSegments.Dequeue()) : false);
         }
 
         public bool fits(List<int> listSegments)
@@ -43,8 +46,8 @@ namespace Fit.BusinessLogic
                 return fitsThroughSingleSegment(listSegments[0]);
 
             bool ret = true;
-            this.stackSegments = new Stack<int>(listSegments);
-            return ret && fitsThroughCurrentJoint(stackSegments.Pop(), stackSegments.Pop());
+            this.queueSegments = new Queue<int>(listSegments);
+            return ret && fitsThroughCurrentJoint(queueSegments.Dequeue(), queueSegments.Dequeue());
         }
 
         private bool fitsThroughSingleSegment(int segWidth)
