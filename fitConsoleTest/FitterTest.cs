@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fit.BusinessLogic;
 namespace FitterTest
 {
@@ -63,7 +63,7 @@ namespace FitterTest
         }
 
         [Fact]
-        public void if_a_equal_b_equal_s2_()
+        public void if_a_equal_b_equal_s2_fits()
         {
             var l = new List<int>() { 2 };
             Fitter f = new Fitter(2, 2);
@@ -71,7 +71,7 @@ namespace FitterTest
         }
 
         [Fact]
-        public void if_s1_smaller_a_equal_b()
+        public void if_s1_smaller_a_equal_b_noFit()
         {
             var l = new List<int>() { 2 };
             Fitter f = new Fitter(3, 3);
@@ -370,7 +370,29 @@ namespace FitterTest
             Assert.True(f.fits(l));
         }
 
+        [Fact]
+        public void if_FirstJointTooSmall_and_rotationNeededInSecondJoint_noFit()
+        {
+            int a = 400;
+            int b = 600;
+            // 501 and 502 because in case of debugging need to tell between the two segment widths
+            var l = new List<int>{ 400, 501, 502 };
 
+            Fitter f = new Fitter(a, b);
+            Assert.False(f.fits(l));
+        }
+
+        [Fact]
+        public void if_secondJointTooSmall_and_rotationNeededInFirstJoint_noFit()
+        {
+            int a = 400;
+            int b = 600;
+            // 501 and 502 because in case of debugging need to tell between the two segment widths
+            var l = new List<int> { 501, 502, 400 };
+
+            Fitter f = new Fitter(a, b);
+            Assert.False(f.fits(l));
+        }
     }
 }
 
