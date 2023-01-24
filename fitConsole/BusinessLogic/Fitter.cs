@@ -19,7 +19,7 @@ namespace Fit.BusinessLogic
         {
             bool ret = false;
 
-            int secondToLastSegmentWidth = s2;
+            int secondSegmentWidth = s2;
             InputFormatter.swapIfNeeded(ref s1, ref s2);
 
             if (bothSegmentsSmallerThanSmallerEdge(s1, s2)) ret = false;
@@ -35,9 +35,7 @@ namespace Fit.BusinessLogic
                 ret = true;
             }
             if (queueSegments.Count == 0) return ret;
-            if (queueSegments.Count == 1)
-                return (ret == true? fitsThroughCurrentJoint(secondToLastSegmentWidth, queueSegments.Dequeue()) : false);
-            return (ret == true? fitsThroughCurrentJoint(queueSegments.Dequeue(), queueSegments.Dequeue()) : false);
+            return (ret == true? fitsThroughCurrentJoint(secondSegmentWidth, queueSegments.Dequeue()) : false);
         }
 
         public bool fits(List<int> listSegments)
