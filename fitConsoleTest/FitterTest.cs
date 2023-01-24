@@ -121,6 +121,22 @@ namespace FitterTest
             Assert.False(f.fits(l));
         }
 
+        [Fact]
+        public void if_firstJointBigEnough_and_secondJointTooSmall_and_thirdJointBigEnough_noFit()
+        {
+            var l = new List<int>() { 6, 4, 4, 6};
+            Fitter f = new Fitter(4, 6);
+            Assert.False(f.fits(l));
+        }
+
+        [Fact]
+        public void if_allThreeJointsBigEnough_fits()
+        {
+            var l = new List<int>() { 51, 52, 53, 54 };
+            Fitter f = new Fitter(40, 60);
+            Assert.True(f.fits(l));
+        }
+
         /*
          * testcases for a single joint - no parcel rotation
          */
